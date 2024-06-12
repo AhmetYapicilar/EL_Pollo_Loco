@@ -39,13 +39,15 @@ class Chicken extends MovableObject {
         if(this.isDead() && !this.soundPlayed){
                 this.intervals.forEach((clearInterval));
                 this.playAnimation(this.IMAGES_DEAD);
+                this.height = 50;
+                this.y += 50;
                 this.DEATH_SOUND.play();
                 this.soundPlayed = true;
                 setTimeout(() => {
                     this.removeChickenFromLevel();
                 }, 500)
            }
-       }, 500); 
+       }, 200); 
        }
 
        removeChickenFromLevel() {

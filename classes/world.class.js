@@ -172,7 +172,7 @@ class World {
 
     checkCollision(){
         this.level.enemies.forEach((enemy) =>{
-            if(this.character.y > 97.5 && this.character.isColliding(enemy) && enemy.energy > 5){
+            if(this.character.y > 170 && this.character.isColliding(enemy) && enemy.energy > 5){
                 this.character.hit();
                 this.character.hurt_sound.play();
                 this.statusbarHealth.setPercentage(this.character.energy);
@@ -185,9 +185,9 @@ class World {
             let chicken = this.level.enemies[i];
             const { characterCenterX, characterCenterY, objectCenterX, objectCenterY } = this.initVariables(chicken);
         if((Math.abs(characterCenterX - objectCenterX)) <= 60 &&
-            this.character.y === 97.5 && this.character.speedY < 0){
+            this.character.y > 140 && this.character.y < 170 && this.character.speedY < 0){
             this.level.enemies[i].energy = 0;
-            this.character.jump(5);
+            this.character.jump(2);
         }
         }
     }

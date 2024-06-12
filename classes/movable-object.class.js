@@ -77,9 +77,9 @@ class MovableObject extends DrawableObject {
 
   isColliding(obj) {
     return (
-      this.x + this.width >= obj.x && // ist die rechte Kante von Pepe größer als die linke Kante vom Hühnchen
-      this.x <= obj.x + obj.width && // ist die linke Kante von Pepe kleiner als die rechte Kante vom Hühnchen
-      this.y + this.height >= obj.y && // ist die obere Kante von Pepe größer als die untere Kante des Hühnchen
+      this.x + this.width >= obj.x + 20 && // ist die rechte Kante von Pepe größer als die linke Kante vom Hühnchen
+      this.x <= obj.x + obj.width - 20 && // ist die linke Kante von Pepe kleiner als die rechte Kante vom Hühnchen
+      this.y + this.height >= 151 && // ist die obere Kante von Pepe größer als die untere Kante des Hühnchen
       this.y <= obj.y + obj.height
     ); // ist die untere Kante von Pepe kleiner als die obere Kante vom Hühnchen
   }

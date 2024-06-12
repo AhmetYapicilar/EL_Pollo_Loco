@@ -48,6 +48,7 @@ class Character extends MovableObject{
 
     animate(){
         setInterval(() =>{
+            console.log(this.y);
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
                 if(this.isAboveGround()){
                     this.walking_sound.pause();

@@ -44,11 +44,11 @@ class Character extends MovableObject{
         this.loadImages(this.IMAGES_DEAD);
         this.applyGravity();
         this.animate();
+        this.stopIntervals();
     }
 
     animate(){
-        setInterval(() =>{
-            console.log(this.y);
+       this.movingLeftInterval = setInterval(() =>{
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
                 if(this.isAboveGround()){
                     this.walking_sound.pause();
@@ -73,17 +73,22 @@ class Character extends MovableObject{
                 this.jumping_sound.play();
             }
             this.world.camera_x = -this.x + 100;
+            this.intervals.push(this.movingLeftInterval);
         }, 1000 / 60);
 
-        setInterval(() =>{
-        if(this.isDead()){
+        this.animationInterval = setInterval(() =>{
+        if(this.isDead() && !this.isDeadAnimationPlaying){
             this.playAnimation(this.IMAGES_DEAD);
             this.world.bgMusic.pause();
-            setTimeout(()=>{
-                setInterval(() =>{
+            setTimeout(() => {
+                this.fallInterval = setInterval(() => {
                     this.y += 10;
-                }, 1000 / 60)
-            }, 1000);
+                }, 1000 / 60);
+            }, 2000);
+            if(this.y > this.world.canvas.height){
+            clearInterval(this.fallInterval);
+            this.isDeadAnimationPlaying = true;
+            }
         } else if(this.isHurt()){
             this.playAnimation(this.IMAGES_HURT);
         } else if(this.isAboveGround()){
@@ -94,6 +99,17 @@ class Character extends MovableObject{
         } 
     }
     }, 50); 
+    this.intervals.push(this.animationInterval);
+    }
+
+    stopIntervals(){
+        setInterval(() => {
+            let i = this.world.level.enemies.length;
+            if(this.isDead() && this.isDeadAnimationPlaying || this.world.level.enemies[i - 1].isDead()){
+            this.intervals.forEach(clearInterval);
+            }
+        }, 1000 / 60);
+    
     }
 
 }

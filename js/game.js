@@ -6,8 +6,17 @@ function init(){
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     console.log('My character is',world.character);
-    console.log('My enemie is', world.level.enemies[0]);
+    console.log('My enemie is', world.level.enemies[0]);  
 }
+
+function startGame(){
+    if(world){
+        world.screen.startScreen = false;
+        world.draw();
+        document.getElementById('startButton').style.display = 'none';
+    }
+}
+
 
 window.addEventListener("keydown", (e) => {
     if(e.keyCode == 37){

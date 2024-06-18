@@ -37,7 +37,8 @@ class ThrowableObject extends CollectableObject {
   }
 
   throw(x, y) {
-    if (!this.sound2Played && this.world) {
+    let i = this.world.level.enemies.length;
+    if (!this.sound2Played && this.world && !this.world.character.isDead() && !this.world.level.enemies[i - 1].isDead()) {
       this.sound2Played = true;
       this.THROW_SOUND.play();
       this.speedY = 30;
@@ -68,8 +69,9 @@ class ThrowableObject extends CollectableObject {
   }*/
 
   splash() {
+    let i = this.world.level.enemies.length;
     this.intervals.forEach(clearInterval);
-    if (!this.soundPlayed) {
+    if (!this.soundPlayed && !this.world.character.isDead() && !this.world.level.enemies[i - 1].isDead()) {
       this.soundPlayed = true;
       setInterval(() => {
         this.playAnimation(this.IMAGES_SPLASH);

@@ -7,3 +7,24 @@ body{
 canvas{
     background-color: black;
 }
+
+.button-div{
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 250px;
+    top: 100px;
+}
+
+.startButton{
+    cursor: pointer;
+    width: 150px;
+    height: 100px;
+    font-size: 24px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgb(255, 168, 0);
+}

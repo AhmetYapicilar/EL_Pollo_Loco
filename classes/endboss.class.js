@@ -98,9 +98,10 @@ class Endboss extends MovableObject {
                 this.speed += 10;
                 this.playAnimation(this.IMAGES_HURT);
             }
-            if(this.isDead()){
+            if(this.isDead() && !this.isDeadAnimationPlaying){
                 this.playAnimation(this.IMAGES_DEAD);
                 this.world.bgMusic.pause();
+                this.finalDeadAnimation();
             }
         }, 100)
 }
@@ -117,10 +118,13 @@ class Endboss extends MovableObject {
     finalDeadAnimation(){
         this.winSound.play();
         setTimeout(() => {
-            this.y -= 25;
-            setInterval(() => {
-                this.y += 25;
-            }, 1000 / 60)
-        }, 1000)
+            this.fallInterval = setInterval(() => {
+                this.y += 10;
+            }, 1000 / 60);
+        }, 2000);
+        if(this.y > this.world.canvas.height){
+        clearInterval(this.fallInterval);
+        this.isDeadAnimationPlaying = true;
+        }
     }
 }

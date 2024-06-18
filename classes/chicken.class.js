@@ -12,28 +12,29 @@ class Chicken extends MovableObject {
 
     constructor(){
         super().loadImage("./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
-        this.x = 200 + Math.random() * 2500;
+        this.x = 300 + Math.random() * 2500;
         this.loadImages(this.IMAGES_Walking);
         this.loadImages(this.IMAGES_DEAD);
         this.speed = 0.5 + Math.random() * 0.5;
-        this.animate();
     }
 
     setWorld(world) {
         this.world = world;
+        this.animate();
     }
 
     animate(){
-        if(!this.isDead()){
         this.movingLeftInterval = setInterval(() => {
-            this.moveLeft();
+            if(!this.isDead() && this.world.character.x > 100){
+                this.moveLeft();
+            }
         }, 1000 / 60);
         this.walkingAnimationInterval = setInterval(() =>{
            this.playAnimation(this.IMAGES_Walking);
        }, 200);
        this.intervals.push(this.movingLeftInterval);
        this.intervals.push(this.walkingAnimationInterval);
-    }
+    
        setInterval(() => {
         this.DEATH_SOUND.pause();
         if(this.isDead() && !this.soundPlayed){

@@ -11,6 +11,9 @@ class MovableObject extends DrawableObject {
   intervals = [];
   movingLeftInterval;
   walkingAnimationInterval; 
+  isDeadAnimationPlaying = false;
+  fallInterval;
+  animationInterval;
 
   setWorld(world){
     this.world = world;

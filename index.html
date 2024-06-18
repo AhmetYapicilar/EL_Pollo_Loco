@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <script src="./classes/drawable-objects.class.js"></script>
+    <script src="./classes/screen.class.js"></script>
     <script src="./classes/status-bar.class.js"></script>
     <script src="./classes/status-bar-endboss.class.js"></script>
     <script src="./classes/status-bar-health.class.js"></script>
@@ -13,6 +14,7 @@
     <script src="./classes/movable-object.class.js"></script>
     <script src="./classes/character.class.js"></script>
     <script src="./classes/chicken.class.js"></script>
+    <script src="./classes/chicken-small.class.js"></script>
     <script src="./classes/cloud.class.js"></script>
     <script src="./classes/background-object.class.js"></script>
     <script src="./classes/endboss.class.js"></script>
@@ -27,9 +29,12 @@
     <link rel="shortcut icon" href="./img/6_salsa_bottle/1_salsa_bottle_on_ground.png" type="image/x-icon">
     <title>El Pollo Loco</title>
 </head>
-<body onload="init()">
+<body id="body" onload="init()">
 
     <h1>El Pollo Loco</h1>
     <canvas id="canvas" width="720" height="480"></canvas>
+    <div class="button-div">
+        <button id="startButton" class="startButton" onclick="startGame()">Start Game</button>
+    </div>
 </body>
 </html>

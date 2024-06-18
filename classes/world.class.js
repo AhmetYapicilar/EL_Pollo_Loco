@@ -1,6 +1,7 @@
 class World {
     character = new Character();
     level = LEVEL1;
+    screen = new Screen();
     statusbarHealth = new HealthBar();
     statusbarBottle = new BottleBar();
     statusbarCoin = new CoinBar();
@@ -150,11 +151,11 @@ class World {
                 bottle.splash();
                 enemy.hit();
                 enemy.energy-=15;
+                if(enemy.energy <= 0){
+                    enemy.energy = 0;
+                }
                 this.statusbarEndboss.setPercentage(enemy.energy);
                 this.throwBottles.splice(0, 1);
-                if(enemy.isDead()){
-                   enemy.finalDeadAnimation();
-                }
             }
         }
     }
@@ -172,7 +173,7 @@ class World {
 
     checkCollision(){
         this.level.enemies.forEach((enemy) =>{
-            if(this.character.y > 170 && this.character.isColliding(enemy) && enemy.energy > 5){
+            if(this.character.y > 170 && this.character.isColliding(enemy) && enemy.energy > 5 && !this.character.isDead()){
                 this.character.hit();
                 this.character.hurt_sound.play();
                 this.statusbarHealth.setPercentage(this.character.energy);
@@ -187,39 +188,42 @@ class World {
         if((Math.abs(characterCenterX - objectCenterX)) <= 60 &&
             this.character.y > 140 && this.character.y < 170 && this.character.speedY < 0){
             this.level.enemies[i].energy = 0;
-            this.character.jump(2);
         }
         }
     }
 
     setWorld(){
         this.character.world = this;
+        this.screen.setWorld(this);
         this.throwableObjects.forEach(bottle => bottle.setWorld(this));
         this.level.enemies.forEach(enemy => enemy.setWorld(this));
     }
 
     draw(){
+        if (this.character.isDead() && this.character.isDeadAnimationPlaying || 
+        this.level.enemies[this.level.enemies.length - 1].isDead() && this.level.enemies[this.level.enemies.length - 1].isDeadAnimationPlaying ||
+        this.screen.startScreen) 
+        {
+            return; // Beende das Zeichnen, wenn der Charakter tot ist und die Animation läuft
+        } 
        this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+       this.addToMap(this.statusbarBottle);
        this.ctx.translate(this.camera_x, 0);
-
+        
        this.addObjectsToMap(this.level.backgroundObjects);
        this.addObjectsToMap(this.level.clouds);
        this.addObjectsToMap(this.coins);
        this.addObjectsToMap(this.throwableObjects);
        this.addObjectsToMap(this.throwBottles);
        this.addToMap(this.character);
-
        this.ctx.translate(-this.camera_x, 0);
        this.addToMap(this.statusbarHealth);
        this.addToMap(this.statusbarBottle);
        this.addToMap(this.statusbarCoin);
        this.addToMap(this.statusbarEndboss);
        this.ctx.translate(this.camera_x, 0);
-
        this.addObjectsToMap(this.level.enemies);
-
        this.ctx.translate(-this.camera_x, 0);
-
        let self = this;
        requestAnimationFrame(function(){
         self.draw();

@@ -10,16 +10,16 @@ class World {
     canvas;
     keyboard;
     camera_x = 0;
-    throwableObjects = [new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
-        new ThrowableObject(),
+    throwableObjects = [new ThrowableObject(200, 200),
+        new ThrowableObject(200, 200),
+        new ThrowableObject(200, 200),
+        new ThrowableObject(200, 200),
+        new ThrowableObject(200, 200),
+        new ThrowableObject(200, 200),
+        new ThrowableObject(200, 200),
+        new ThrowableObject(200, 200),
+        new ThrowableObject(200, 200),
+        new ThrowableObject(200, 200),
     ];
     collectedBottles = [];
     throwBottles = [];
@@ -48,15 +48,9 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.draw();
         this.run();
-        this.setupAudio();
     }
 
-    setupAudio() {
-        // Hinzufügen eines Event-Listeners für Benutzerinteraktionen
-        document.addEventListener('click', () => {
-            this.playBackgroundMusic();
-        }, { once: true }); // { once: true } stellt sicher, dass der Event-Listener nur einmal ausgeführt wird
-    }
+    
 
     playBackgroundMusic() {
         this.bgMusic.loop = true; // Aktivieren der integrierten Schleifenfunktion
@@ -118,6 +112,7 @@ class World {
            this.checkCollision();
            this.checkThrowObjects();
            this.endbossGetsBottle();
+           this.chickenGetsBottle();
            this.bottleFallsOnGround();
            this.playGameOver();
         }, 200);
@@ -160,6 +155,21 @@ class World {
         }
     }
 
+    chickenGetsBottle(){
+        this.level.enemies.forEach(enemy => {
+            for(let i = 0; i < this.throwBottles.length; i++){
+                let bottle = this.throwBottles[i];
+                if ((bottle.y >= enemy.y - 60) &&
+                ((enemy.x > this.character.x && Math.abs(bottle.x - ((enemy.x + enemy.width) / 2 + 10)) <= 30) ||
+                (enemy.x < this.character.x && Math.abs(bottle.x - ((enemy.x + enemy.width) / 2 - 10)) <= 30))) {
+                        bottle.splash();
+                        enemy.energy = 0;
+                        this.throwBottles.splice(0, 1);
+                    }
+            }
+        })
+    }
+
     bottleFallsOnGround(){
         if(this.throwBottles.length > 0){
             let bottle = this.throwBottles[0];
@@ -172,8 +182,9 @@ class World {
     }
 
     checkCollision(){
+        let i = this.level.enemies.length;
         this.level.enemies.forEach((enemy) =>{
-            if(this.character.y > 170 && this.character.isColliding(enemy) && enemy.energy > 5 && !this.character.isDead()){
+            if(this.character.y > 170 && this.character.isColliding(enemy) && enemy.energy > 5 && !this.character.isDead() && !this.level.enemies[i -1].isDead()){
                 this.character.hit();
                 this.character.hurt_sound.play();
                 this.statusbarHealth.setPercentage(this.character.energy);

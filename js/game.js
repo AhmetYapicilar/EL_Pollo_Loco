@@ -13,7 +13,9 @@ function startGame(){
     if(world){
         world.screen.startScreen = false;
         world.draw();
+        world.playBackgroundMusic();
         document.getElementById('startButton').style.display = 'none';
+        document.getElementById('title').style.display = 'none';
     }
 }
 

@@ -9,6 +9,7 @@ class SmallChicken extends MovableObject {
     IMAGES_DEAD = ['./img/3_enemies_chicken/chicken_small/2_dead/dead.png'];
     DEATH_SOUND = new Audio('audio/chicken_death.mp3');
     world;
+    soundPlayed = false;
 
 
 constructor(){
@@ -26,18 +27,20 @@ setWorld(world) {
 
 animate(){
     this.movingLeftInterval = setInterval(() => {
-    if(!this.isDead() && this.world.character.x > 100){
+    if(!this.isDead() && !this.world.screen.startScreen){
         this.moveLeft();
     }
     }, 1000 / 60);
+    
+    this.walkingAnimationInterval = setInterval(() =>{
+        this.playAnimation(this.IMAGES_Walking);
+    }, 200);
+    this.intervals.push(this.walkingAnimationInterval);
    this.intervals.push(this.movingLeftInterval);
 
    setInterval(() => {
-    this.DEATH_SOUND.pause();
-    if(!this.isDead()){
-            this.playAnimation(this.IMAGES_Walking);
-    }
-    if(this.isDead() && !this.soundPlayed){
+   // this.DEATH_SOUND.pause();
+      if(this.isDead() && !this.soundPlayed){
             this.intervals.forEach((clearInterval));
             this.playAnimation(this.IMAGES_DEAD);
             
@@ -54,5 +57,8 @@ animate(){
     const index = this.world.level.enemies.indexOf(this);
     if (index > -1) {
         this.world.level.enemies.splice(index, 1);
-    }}
+    } else{
+        console.log('Chicken nicht verfügbar')
+    }
+}
 }

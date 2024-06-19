@@ -45,7 +45,14 @@ class Screen extends DrawableObject {
 
     reloadPage(){
         setTimeout(() => {
+            this.clearAllIntervals();
             window.location.reload();
         }, 2000);
+    }
+
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) {
+            window.clearInterval(i);
+        }
     }
 }

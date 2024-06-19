@@ -1,25 +1,36 @@
+@font-face {
+    font-family: 'zabars';
+    src: url('./fonts/zabars.ttf') format('truetype'); 
+}  
+
 body{
+    font-family: 'zabars', Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: url('./img/desert.png');
+    background-position: center;
 }
 
 canvas{
     background-color: black;
+    display: block;
 }
 
 .button-div{
-    width: 300px;
-    height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    left: 250px;
-    top: 100px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .startButton{
+    font-family: 'zabars', Arial, Helvetica, sans-serif;
     cursor: pointer;
     width: 150px;
     height: 100px;
@@ -27,4 +38,32 @@ canvas{
     border-radius: 50%;
     border: none;
     background-color: rgb(255, 168, 0);
+}
+
+@media only screen and (max-width: 720px){
+    canvas{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px){
+    canvas{
+        height: 100vh;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .startButton {
+        width: 80px;
+        height: 60px;
+        font-size: 16px;
+    }
+}
+
+@media only screen and (max-height: 320px) {
+    .startButton {
+        width: 80px;
+        height: 60px;
+        font-size: 16px;
+    }
 }

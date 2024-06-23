@@ -46,7 +46,6 @@ class World {
         this.keyboard = keyboard;
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
-        this.draw();
         this.run();
     }
 
@@ -156,18 +155,19 @@ class World {
     }
 
     chickenGetsBottle(){
-        this.level.enemies.forEach(enemy => {
+        for(let j = 0; j < this.level.enemies.length -1; j++){
             for(let i = 0; i < this.throwBottles.length; i++){
                 let bottle = this.throwBottles[i];
+                let enemy = this.level.enemies[j];
                 if ((bottle.y >= enemy.y - 60) &&
-                ((enemy.x > this.character.x && Math.abs(bottle.x - ((enemy.x + enemy.width) / 2 + 10)) <= 30) ||
-                (enemy.x < this.character.x && Math.abs(bottle.x - ((enemy.x + enemy.width) / 2 - 10)) <= 30))) {
+                ((enemy.x > this.character.x && Math.abs(bottle.x - ((enemy.x + enemy.width) - 10)) <= 30) ||
+                (enemy.x < this.character.x && Math.abs(bottle.x - ((enemy.x + enemy.width) - 10)) <= 30))) {
                         bottle.splash();
                         enemy.energy = 0;
                         this.throwBottles.splice(0, 1);
                     }
             }
-        })
+        }
     }
 
     bottleFallsOnGround(){
@@ -205,9 +205,9 @@ class World {
 
     setWorld(){
         this.character.world = this;
+        this.level.enemies.forEach(enemy => enemy.setWorld(this));
         this.screen.setWorld(this);
         this.throwableObjects.forEach(bottle => bottle.setWorld(this));
-        this.level.enemies.forEach(enemy => enemy.setWorld(this));
     }
 
     draw(){

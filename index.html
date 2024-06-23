@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
     <script src="./classes/drawable-objects.class.js"></script>
     <script src="./classes/screen.class.js"></script>
     <script src="./classes/status-bar.class.js"></script>
@@ -26,15 +26,81 @@
     <script src="./classes/world.class.js"></script>
     <script src="./classes/keyboard.class.js"></script>
     <script src="./js/game.js"></script>
-    <link rel="shortcut icon" href="./img/6_salsa_bottle/1_salsa_bottle_on_ground.png" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="./img/6_salsa_bottle/1_salsa_bottle_on_ground.png"
+      type="image/x-icon"
+    />
     <title>El Pollo Loco</title>
-</head>
-<body id="body" onload="init()">
+  </head>
+  <body id="body" onload="init()">
+    <div id="turnDeviceScreen">
+      <h2>please turn your phone or tablet to landscape</h2>
+    </div>
+
+    <div id="screen" class="screen">
+      <div class="icons">
+        <button id="startButton" class="startButton" onclick="startGame()">
+          Start Game
+        </button>
+        <div class="flex gap-16">
+          <img
+            onclick="openSettings()"
+            id="settings"
+            src="./img/setting.png"
+            alt="settings"
+          />
+          <img
+            onclick="showFullscreen()"
+            id="fullscreen"
+            src="./img/fullscreen.png"
+            alt="fullscreen"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div id="settings-screen" class="screen bgOrange" style="display: none">
+      <div class="column">
+        <div class="space-between gap-16">
+          <img src="./img/left.png" /><span>Move Left</span>
+        </div>
+        <div class="space-between gap-16">
+          <img src="./img/right.png" /><span>Move Right</span>
+        </div>
+        <div class="space-between gap-16">
+          <span>SPACE</span><span>JUMP</span>
+        </div>
+        <div class="space-between gap-16">
+          <span>D</span><span>Throw Bottle</span>
+        </div>
+      </div>
+      <img
+        class="closeIcon"
+        onclick="closeSettings()"
+        src="./img/closeIcon.png"
+      />
+    </div>
 
     <h1 id="title">El Pollo Loco</h1>
-    <canvas id="canvas" width="720" height="480"></canvas>
-    <div class="button-div">
-        <button id="startButton" class="startButton" onclick="startGame()">Start Game</button>
+    <div id="showInFullscreen">
+      <canvas id="canvas" width="720" height="480"></canvas>
+      <div
+      id="mobileButtons"
+      class="width-100 space-between"
+      style="display: none">
+      <div class="flex">
+        <img id="btnLeft" src="./img/arrow-left.png" alt="Left" />
+        <img id="btnRight" src="./img/arrow-right.png" alt="Right" />
+      </div>
+      <div class="flex">
+        <img id="btnJump" src="./img/arrow-up.png" alt="Jump" />
+        <div id="btnThrow" class="circle">
+          <img src="./img/6_salsa_bottle/salsa_bottle.png" alt="Throw" />
+        </div>
+      </div>
     </div>
-</body>
+    </div>
+
+  </body>
 </html>

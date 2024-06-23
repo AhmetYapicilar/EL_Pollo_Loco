@@ -19,16 +19,6 @@ canvas{
     display: block;
 }
 
-.button-div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .startButton{
     font-family: 'zabars', Arial, Helvetica, sans-serif;
     cursor: pointer;
@@ -38,6 +28,94 @@ canvas{
     border-radius: 50%;
     border: none;
     background-color: rgb(255, 168, 0);
+    margin-left: 100px;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+}
+
+.gap-16{
+    gap: 16px;
+}
+
+.width-100{
+    width: 100%;
+}
+
+.space-between{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.flex img{
+    width: 48px;
+    height: 48px;
+}
+
+.circle{
+    border: 1px solid black;
+    background-color: black;
+    width: 39px;
+    height: 39px;
+    border-radius: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.screen{
+    position: absolute;
+    width: 720px;
+    height: 480px;
+    margin-top: 72px;
+}
+
+.icons{
+    position: absolute;
+    width: 100%;
+    top: 7px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.icons img{
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    gap: 20px;
+}
+
+.column img {
+    width: 48px;
+    height: 48px;
+}
+
+.bgOrange{
+    background-color: rgb(124, 81, 0);
+}
+
+.closeIcon{
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 720px){

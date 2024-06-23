@@ -14,6 +14,7 @@ class MovableObject extends DrawableObject {
   isDeadAnimationPlaying = false;
   fallInterval;
   animationInterval;
+  dead = false;
 
   setWorld(world){
     this.world = world;

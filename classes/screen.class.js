@@ -4,13 +4,13 @@ class Screen extends DrawableObject {
     height = 480;
     width = 720;
     i;
-    startScreen = true;
     IMAGE_INTRO = './img/9_intro_outro_screens/start/startscreen_1.png';
     IMAGE_GAMEOVER = './img/9_intro_outro_screens/game_over/game over!.png';
     IMAGE_WIN = './img/9_intro_outro_screens/win/win_2.png';
     world;
+    startScreen = true;
 
-    constructor(){
+    constructor(canvas){
         super();
     }
 
@@ -44,7 +44,7 @@ class Screen extends DrawableObject {
     }
 
     reloadPage(){
-        setTimeout(() => {
+        setTimeout(() => {  
             this.clearAllIntervals();
             window.location.reload();
         }, 2000);
@@ -55,4 +55,28 @@ class Screen extends DrawableObject {
             window.clearInterval(i);
         }
     }
+
+  
+    /*
+    showIntro(){
+        this.loadImage("./img/9_intro_outro_screens/start/startscreen_1.png");
+    }
+
+    showWinScreen(){
+        setInterval(() => {
+            this.loadImage(this.IMAGE_WIN);
+                this.world.ctx.clearRect(0, 0, this.world.canvas.width, this.world.canvas.height);
+                this.world.ctx.drawImage(this.img, 0, 0, this.world.canvas.width, this.world.canvas.height);
+                this.reloadPage();
+        }, 1000 / 60);      
+    } 
+
+    showGameOver(){ 
+        setInterval(() => {
+            this.loadImage(this.IMAGE_GAMEOVER);
+                this.world.ctx.clearRect(0, 0, this.world.canvas.width, this.world.canvas.height);
+                this.world.ctx.drawImage(this.img, 0, 0, this.world.canvas.width, this.world.canvas.height);  
+                this.reloadPage();  
+        }, 1000 / 60); 
+    } */
 }

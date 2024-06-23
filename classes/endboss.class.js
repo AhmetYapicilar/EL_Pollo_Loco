@@ -102,6 +102,7 @@ class Endboss extends MovableObject {
                 this.playAnimation(this.IMAGES_DEAD);
                 this.world.bgMusic.pause();
                 this.finalDeadAnimation();
+                this.dead = true;
             }
         }, 100)
 }

@@ -27,7 +27,44 @@ function startGame() {
 
 function showFullscreen(){
     let fullscreen = document.getElementById('showInFullscreen');
-    enterFullscreen(fullscreen);
+    toggleFullscreen(fullscreen);
+}
+
+function toggleFullscreen(fullscreenElement){
+  if(document.fullscreenElement){
+    exitFullscreen(fullscreenElement);
+    handleResize(); // Check the initial state
+    window.addEventListener('resize', handleResize);
+    generateCSSForNormalscreen();
+  } else {
+    enterFullscreen(fullscreenElement);
+    generateCSSForFullscreen();
+  }
+}
+
+function generateCSSForFullscreen(){
+    document.getElementById('showInFullscreen').style.position = "absolute";
+    document.getElementById('showInFullscreen').style.top = "0";
+    document.getElementById('showInFullscreen').style.left = "0";
+    document.getElementById('showInFullscreen').style.right = "0";
+    document.getElementById('showInFullscreen').style.bottom = "0";
+    document.getElementById('canvas').style.width = '100vw';
+    document.getElementById('canvas').style.height = '100vh';
+    document.getElementById('screen').style.width = '100vw';
+    document.getElementById('screen').style.height = '100vh';
+    document.getElementById('settings-screen').style.width = '100vw';
+    document.getElementById('settings-screen').style.height = '100vh';
+}
+
+function generateCSSForNormalscreen(){
+  document.getElementById('showInFullscreen').style.position = "static";
+  document.getElementById('showInFullscreen').style.display = "flex";
+  document.getElementById('canvas').style.width = '720px';
+  document.getElementById('canvas').style.height = '480px';
+  document.getElementById('screen').style.width = '720px';
+  document.getElementById('screen').style.height = '480px';
+  document.getElementById('settings-screen').style.width = '720px';
+  document.getElementById('settings-screen').style.height = '480px';
 }
 
 function enterFullscreen(element) {
@@ -51,6 +88,7 @@ function exitFullscreen() {
 function openSettings(){
     document.getElementById('screen').style.display = 'none';
     document.getElementById('settings-screen').style.display = 'flex';
+    console.log('settings opened');
 }
 
 function closeSettings(){

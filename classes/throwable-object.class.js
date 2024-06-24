@@ -5,6 +5,9 @@ class ThrowableObject extends CollectableObject {
   y = 50 + Math.random() * 200;
   world;
   rotatingInterval;
+  IMAGE_BOTTLE_NORMAL = "./img/6_salsa_bottle/salsa_bottle.png";
+  IMAGE_BOTTLE_GROUND1 = "./img/6_salsa_bottle/1_salsa_bottle_on_ground.png";
+  IMAGE_BOTTLE_GROUND2 = "./img/6_salsa_bottle/2_salsa_bottle_on_ground.png";
   IMAGES_ROTATION = [
     "./img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
     "./img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
@@ -22,14 +25,20 @@ class ThrowableObject extends CollectableObject {
   THROW_SOUND = new Audio("audio/throwing.mp3");
   SPLASH_SOUND = new Audio("audio/bottleSplash.mp3");
 
-  constructor(x, y) {
-    super().loadImage("./img/6_salsa_bottle/salsa_bottle.png");
+  constructor(x) {
+    super().loadImage(this.IMAGE_BOTTLE_NORMAL);
     this.loadImages(this.IMAGES_ROTATION);
     this.loadImages(this.IMAGES_SPLASH);
-    if (x && y) {
+    if (x) {
+      this.loadImage(this.IMAGE_BOTTLE_GROUND1);
       this.x = x;
-      this.y = y;
+      this.y = 350;
+    if (Math.random() < 0.5) {
+      this.loadImage(this.IMAGE_BOTTLE_GROUND1);
+    } else {
+      this.loadImage(this.IMAGE_BOTTLE_GROUND2);
     }
+  }
   }
 
   setWorld(world) {
@@ -42,6 +51,7 @@ class ThrowableObject extends CollectableObject {
       this.sound2Played = true;
       this.THROW_SOUND.play();
       this.speedY = 30;
+      this.y = y;
       this.applyGravity();
       if(!this.world.character.otherDirection){
         this.rotatingInterval = setInterval(() => {
@@ -58,15 +68,6 @@ class ThrowableObject extends CollectableObject {
         }
     }
   }
-
-  /*enemyIsRight(){
-    if(this.world){
-        let characterX = this.world.character.x;
-        let array = this.world.level.enemies;
-        let enemyX = array[array.length - 1].x;
-    return (enemyX - characterX > 0);
-    }
-  }*/
 
   splash() {
     let i = this.world.level.enemies.length;

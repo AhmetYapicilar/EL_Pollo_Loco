@@ -14,6 +14,13 @@ body{
     background-position: center;
 }
 
+.content{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 canvas{
     background-color: black;
     display: block;
@@ -70,7 +77,6 @@ canvas{
     position: absolute;
     width: 720px;
     height: 480px;
-    margin-top: 72px;
 }
 
 .icons{
@@ -94,9 +100,6 @@ canvas{
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
-    left: 100px;
-    top: 100px;
     gap: 20px;
 }
 
@@ -107,6 +110,9 @@ canvas{
 
 .bgOrange{
     background-color: rgb(124, 81, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .closeIcon{

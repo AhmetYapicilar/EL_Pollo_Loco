@@ -10,16 +10,16 @@ class World {
     canvas;
     keyboard;
     camera_x = 0;
-    throwableObjects = [new ThrowableObject(200, 200),
-        new ThrowableObject(200, 200),
-        new ThrowableObject(200, 200),
-        new ThrowableObject(200, 200),
-        new ThrowableObject(200, 200),
-        new ThrowableObject(200, 200),
-        new ThrowableObject(200, 200),
-        new ThrowableObject(200, 200),
-        new ThrowableObject(200, 200),
-        new ThrowableObject(200, 200),
+    throwableObjects = [new ThrowableObject(300),
+        new ThrowableObject(500),
+        new ThrowableObject(),
+        new ThrowableObject(),
+        new ThrowableObject(600),
+        new ThrowableObject(),
+        new ThrowableObject(),
+        new ThrowableObject(),
+        new ThrowableObject(900),
+        new ThrowableObject(),
     ];
     collectedBottles = [];
     throwBottles = [];
@@ -90,6 +90,17 @@ class World {
     }
     }
 
+    collectBottleOnGround(){
+        for(let i = 0; i<this.throwableObjects.length; i++){
+            let bottle = this.throwableObjects[i];
+            if(bottle.y === 350 && (Math.abs(this.character.x - bottle.x) <= 40) && this.character.y === 180){
+                this.collectedBottles.push(bottle);
+            this.statusbarBottle.setPercentage(this.collectedBottles.length * 10);
+            this.throwableObjects.splice(i, 1);
+            }
+    }
+}
+
     collectCoins(){
         for(let i = 0; i<this.coins.length; i++){
             let coin = this.coins[i];
@@ -118,6 +129,7 @@ class World {
 
         setInterval(() => {
             this.collectBottle();
+            this.collectBottleOnGround()
             this.collectCoins();
             this.chickenDead();
         }, 1000 / 60);
@@ -131,6 +143,7 @@ class World {
             this.collectedBottles.splice(this.collectedBottles.length - 1, 1);
             this.statusbarBottle.setPercentage(this.collectedBottles.length * 10);
             this.throwBottles.push(bottle);
+            this.character.inActivityTime = 0;
         }
     }
 

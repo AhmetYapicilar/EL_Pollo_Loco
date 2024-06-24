@@ -34,72 +34,77 @@
     <title>El Pollo Loco</title>
   </head>
   <body id="body" onload="init()">
-    <div id="turnDeviceScreen">
-      <h2>please turn your phone or tablet to landscape</h2>
-    </div>
-
-    <div id="screen" class="screen">
-      <div class="icons">
-        <button id="startButton" class="startButton" onclick="startGame()">
-          Start Game
-        </button>
-        <div class="flex gap-16">
-          <img
-            onclick="openSettings()"
-            id="settings"
-            src="./img/setting.png"
-            alt="settings"
-          />
-          <img
-            onclick="showFullscreen()"
-            id="fullscreen"
-            src="./img/fullscreen.png"
-            alt="fullscreen"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div id="settings-screen" class="screen bgOrange" style="display: none">
-      <div class="column">
-        <div class="space-between gap-16">
-          <img src="./img/left.png" /><span>Move Left</span>
-        </div>
-        <div class="space-between gap-16">
-          <img src="./img/right.png" /><span>Move Right</span>
-        </div>
-        <div class="space-between gap-16">
-          <span>SPACE</span><span>JUMP</span>
-        </div>
-        <div class="space-between gap-16">
-          <span>D</span><span>Throw Bottle</span>
-        </div>
-      </div>
-      <img
-        class="closeIcon"
-        onclick="closeSettings()"
-        src="./img/closeIcon.png"
-      />
-    </div>
 
     <h1 id="title">El Pollo Loco</h1>
-    <div id="showInFullscreen">
+    <div class="content" id="showInFullscreen">
+
+      <div id="screen" class="screen">
+        <div class="icons">
+          <button id="startButton" class="startButton" onclick="startGame()">
+            Start Game
+          </button>
+          <div class="flex gap-16">
+            <img
+              onclick="openSettings()"
+              id="settings"
+              src="./img/setting.png"
+              alt="settings"
+            />
+            <img
+              onclick="showFullscreen()"
+              id="fullscreen"
+              src="./img/fullscreen.png"
+              alt="fullscreen"
+            />
+          </div>
+        </div>
+      </div>
+      
+
+        <div id="settings-screen" class="screen bgOrange" style="display: none">
+          <div class="column">
+            <div class="space-between gap-16">
+              <img src="./img/left.png" /><span>Move Left</span>
+            </div>
+            <div class="space-between gap-16">
+              <img src="./img/right.png" /><span>Move Right</span>
+            </div>
+            <div class="space-between gap-16">
+              <span>SPACE</span><span>JUMP</span>
+            </div>
+            <div class="space-between gap-16">
+              <span>D</span><span>Throw Bottle</span>
+            </div>
+          </div>
+          <img
+            class="closeIcon"
+            onclick="closeSettings()"
+            src="./img/closeIcon.png"
+          />
+        </div>
+  
+      
       <canvas id="canvas" width="720" height="480"></canvas>
       <div
-      id="mobileButtons"
-      class="width-100 space-between"
-      style="display: none">
-      <div class="flex">
-        <img id="btnLeft" src="./img/arrow-left.png" alt="Left" />
-        <img id="btnRight" src="./img/arrow-right.png" alt="Right" />
-      </div>
-      <div class="flex">
-        <img id="btnJump" src="./img/arrow-up.png" alt="Jump" />
-        <div id="btnThrow" class="circle">
-          <img src="./img/6_salsa_bottle/salsa_bottle.png" alt="Throw" />
+        id="mobileButtons"
+        class="width-100 space-between"
+        style="display: none"
+      >
+        <div class="flex">
+          <img id="btnLeft" src="./img/arrow-left.png" alt="Left" />
+          <img id="btnRight" src="./img/arrow-right.png" alt="Right" />
+        </div>
+        <div class="flex">
+          <img id="btnJump" src="./img/arrow-up.png" alt="Jump" />
+          <div id="btnThrow" class="circle">
+            <img src="./img/6_salsa_bottle/salsa_bottle.png" alt="Throw" />
+          </div>
         </div>
       </div>
     </div>
+
+    <div id="turnDeviceScreen">
+      <h2>please turn your phone or tablet to landscape</h2>
     </div>
 
   </body>

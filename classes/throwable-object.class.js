@@ -33,12 +33,12 @@ class ThrowableObject extends CollectableObject {
       this.loadImage(this.IMAGE_BOTTLE_GROUND1);
       this.x = x;
       this.y = 350;
-    if (Math.random() < 0.5) {
-      this.loadImage(this.IMAGE_BOTTLE_GROUND1);
-    } else {
-      this.loadImage(this.IMAGE_BOTTLE_GROUND2);
+      if (Math.random() < 0.5) {
+        this.loadImage(this.IMAGE_BOTTLE_GROUND1);
+      } else {
+        this.loadImage(this.IMAGE_BOTTLE_GROUND2);
+      }
     }
-  }
   }
 
   setWorld(world) {
@@ -47,32 +47,57 @@ class ThrowableObject extends CollectableObject {
 
   throw(x, y) {
     let i = this.world.level.enemies.length;
-    if (!this.sound2Played && this.world && !this.world.character.isDead() && !this.world.level.enemies[i - 1].isDead()) {
+    if (this.bottleIsNotSplashedAndGameIsWorking(i)) {
       this.sound2Played = true;
       this.THROW_SOUND.play();
       this.speedY = 30;
       this.y = y;
       this.applyGravity();
-      if(!this.world.character.otherDirection){
-        this.rotatingInterval = setInterval(() => {
-            this.x += 10;
-            this.playAnimation(this.IMAGES_ROTATION);
-        }, 30);
-        this.intervals.push(this.rotatingInterval);
-        } else {
-            this.rotatingInterval2 = setInterval(() => {
-                this.x -= 10;
-                this.playAnimation(this.IMAGES_ROTATION);
-            }, 30);
-            this.intervals.push(this.rotatingInterval2);
-        }
+      if (this.bottleIsThrowedRight()) {
+        this.bottleFliesRight();
+      } else {
+        this.bottleFliesLeft();
+      }
     }
+  }
+
+  bottleIsNotSplashedAndGameIsWorking(i) {
+    return (
+      !this.sound2Played &&
+      this.world &&
+      !this.world.character.isDead() &&
+      !this.world.level.enemies[i - 1].isDead()
+    );
+  }
+
+  bottleIsThrowedRight() {
+    return !this.world.character.otherDirection;
+  }
+
+  bottleFliesRight() {
+    this.rotatingInterval = setInterval(() => {
+      this.x += 10;
+      this.playAnimation(this.IMAGES_ROTATION);
+    }, 30);
+    this.intervals.push(this.rotatingInterval);
+  }
+
+  bottleFliesLeft() {
+    this.rotatingInterval2 = setInterval(() => {
+      this.x -= 10;
+      this.playAnimation(this.IMAGES_ROTATION);
+    }, 30);
+    this.intervals.push(this.rotatingInterval2);
   }
 
   splash() {
     let i = this.world.level.enemies.length;
     this.intervals.forEach(clearInterval);
-    if (!this.soundPlayed && !this.world.character.isDead() && !this.world.level.enemies[i - 1].isDead()) {
+    if (
+      !this.soundPlayed &&
+      !this.world.character.isDead() &&
+      !this.world.level.enemies[i - 1].isDead()
+    ) {
       this.soundPlayed = true;
       setInterval(() => {
         this.playAnimation(this.IMAGES_SPLASH);

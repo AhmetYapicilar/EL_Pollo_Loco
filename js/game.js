@@ -15,8 +15,6 @@ function startGame() {
     world.screen.startScreen = false;
     world.draw();
     world.playBackgroundMusic();
-    console.log("My character is", world.character);
-    console.log("My enemie is", world.level.enemies[0]);
     mobileButtons();
     handleResize(); // Check the initial state
     window.addEventListener('resize', handleResize);

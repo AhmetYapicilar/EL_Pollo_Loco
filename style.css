@@ -10,15 +10,27 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    min-width: 100vw;
     background-image: url('./img/desert.png');
     background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.d-none{
+    display: none;
+}
+
+.d-flex{
+    display: flex;
 }
 
 .content{
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 canvas{
@@ -79,6 +91,24 @@ canvas{
     height: 480px;
 }
 
+.screen-bottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 10px;
+    height: 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 30;
+}
+
+.icon-audio{
+    width: 48px;
+    height: 48px;
+    cursor: pointer !important;
+}
+
 .icons{
     position: absolute;
     width: 100%;
@@ -124,15 +154,74 @@ canvas{
     cursor: pointer;
 }
 
+.impressum{
+    font-family: 'zabars', Arial, Helvetica, sans-serif;
+}
+
+.impressum a{
+    text-decoration: none;
+    color: black;
+    font-size: 24px;
+}
+
+h1{
+    font-size: 56px;
+}
+
+h2{
+    font-size: 48px;
+}
+
+p{
+    font-size: 40px;
+}
+
+.mobileButtons{
+    position: absolute;
+    bottom: 0px;
+}
+
 @media only screen and (max-width: 720px){
-    canvas{
+    #body{
+        width: 100vw;
+        height: 100vh;
+        overflow-x: hidden !important;
+        margin: 0;
+    }
+    canvas, .content, .screen{
         width: 100%;
+    }
+
+    .screen{
+        height: 100%;
+    }
+
+    #title{
+        display: none !important;
+    }
+
+    .impressum{
+        position: absolute;
+        bottom: 0;
+        right: 10px;
     }
 }
 
 @media only screen and (max-height: 480px){
-    canvas{
+    #body{
         height: 100vh;
+        overflow-y: hidden !important;
+    }
+    canvas, .content, .screen{
+        height: 90%;
+    }
+
+    .screen{
+        height: 100vh;
+    }
+
+    #title{
+        display: none !important;
     }
 }
 

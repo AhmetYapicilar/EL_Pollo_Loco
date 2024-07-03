@@ -4,6 +4,12 @@ class Coin extends CollectableObject {
         'img/8_coin/coin_2.png'
     ];
     COIN_SOUND = new Audio('audio/collectCoin.mp3');
+    offset = {
+        top: 5,
+        left: 10,
+        right: 10,
+        bottom: 25
+      };
    
     constructor(x, y){
       super().loadImage('img/8_coin/coin_1.png'); 

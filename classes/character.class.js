@@ -64,6 +64,12 @@ class Character extends MovableObject {
   walking_sound = new Audio("audio/walking.mp3");
   jumping_sound = new Audio("audio/jumping.mp3");
   hurt_sound = new Audio("audio/characterHurt.mp3");
+  offset = {
+    top: 70,
+    left: 70,
+    right: 60,
+    bottom: 30
+  };
 
   constructor() {
     super().loadImage("./img/2_character_pepe/2_walk/W-21.png");
@@ -169,13 +175,13 @@ class Character extends MovableObject {
   }
 
   moveTheCharacter() {
-    if (this.arrowRightButtonIsPushed()) {
+    if (this.arrowRightButtonIsPushed() && !this.isDead()) {
       this.moveCharacterRight();
     }
-    if (this.arrowLeftButtonIsPushed()) {
+    if (this.arrowLeftButtonIsPushed() && !this.isDead()) {
       this.moveCharacterLeft();
     }
-    if (this.spaceButtonIsPushed()) {
+    if (this.spaceButtonIsPushed() && !this.isDead()) {
       this.jumpCharacter();
     }
     this.world.camera_x = -this.x + 100;

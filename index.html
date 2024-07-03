@@ -38,12 +38,18 @@
     <h1 id="title">El Pollo Loco</h1>
     <div class="content" id="showInFullscreen">
 
+      <div id="screen-bottom" class="screen-bottom">
+        <img onclick="toggleAudio()" class="icon-audio" id="audio-icon" src="./img/audio-icon.png" alt="audio">
+        <img onclick="toggleAudio()" class="icon-audio d-none" id="mute-audio-icon" src="./img/mute-audi-icon.png" alt="mute">
+      </div>
+
       <div id="screen" class="screen">
         <div class="icons">
           <button id="startButton" class="startButton" onclick="startGame()">
             Start Game
           </button>
           <div class="flex gap-16">
+            <button id="backToMenu" class="startButton d-none" onclick="showIntro()">Back To Menu</button>
             <img
               onclick="openSettings()"
               id="settings"
@@ -87,7 +93,7 @@
       <canvas id="canvas" width="720" height="480"></canvas>
       <div
         id="mobileButtons"
-        class="width-100 space-between"
+        class="width-100 space-between mobileButtons"
         style="display: none"
       >
         <div class="flex">
@@ -101,6 +107,10 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="impressum">
+      <a href="./impressum.html" target="_blank">Impressum</a>
     </div>
 
     <div id="turnDeviceScreen">

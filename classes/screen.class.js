@@ -5,10 +5,12 @@ class Screen extends DrawableObject {
   width = 720;
   i;
   IMAGE_INTRO = "./img/9_intro_outro_screens/start/startscreen_1.png";
-  IMAGE_GAMEOVER = "./img/9_intro_outro_screens/game_over/game over!.png";
+  IMAGE_GAMEOVER = "./img/9_intro_outro_screens/game_over/oh no you lost!.png";
   IMAGE_WIN = "./img/9_intro_outro_screens/win/win_2.png";
   world;
   startScreen = true;
+  winScreen = false;
+  gameOverScreen = false;
 
   constructor(canvas) {
     super();
@@ -20,6 +22,11 @@ class Screen extends DrawableObject {
     this.animate();
   }
 
+  triggerGameOverEvent() {
+    const event = new CustomEvent('gameOver', { detail: this });
+    window.dispatchEvent(event);
+  }
+
   animate() {
     setInterval(() => {
       this.i = this.world.level.enemies.length - 1;
@@ -27,8 +34,10 @@ class Screen extends DrawableObject {
         this.showIntroScreen();
       } else if (this.endbossIsDead()) {
         this.showWinScreen();
+        this.triggerGameOverEvent();
       } else if (this.characterIsDead()) {
         this.showGameOverScreen();
+        this.triggerGameOverEvent();
       }
     }, 1000 / 60);
   }
@@ -67,12 +76,12 @@ class Screen extends DrawableObject {
 
   showWinScreen() {
     this.loadImage(this.IMAGE_WIN);
-    this.world.ctx.clearRect(
+    /*this.world.ctx.clearRect(
       0,
       0,
       this.world.canvas.width,
       this.world.canvas.height
-    );
+    );*/
     this.world.ctx.drawImage(
       this.img,
       0,
@@ -80,17 +89,18 @@ class Screen extends DrawableObject {
       this.world.canvas.width,
       this.world.canvas.height
     );
-    this.reloadPage();
+    this.winScreen = true;
+    //this.reloadPage();
   }
 
   showGameOverScreen() {
     this.loadImage(this.IMAGE_GAMEOVER);
-    this.world.ctx.clearRect(
+    /*this.world.ctx.clearRect(
       0,
       0,
       this.world.canvas.width,
       this.world.canvas.height
-    );
+    );*/
     this.world.ctx.drawImage(
       this.img,
       0,
@@ -98,19 +108,15 @@ class Screen extends DrawableObject {
       this.world.canvas.width,
       this.world.canvas.height
     );
-    this.reloadPage();
+    this.gameOverScreen = true;
+    //this.reloadPage();
   }
 
   reloadPage() {
     setTimeout(() => {
       this.clearAllIntervals();
-      window.location.reload();
+      //window.location.reload();
     }, 2000);
   }
 
-  clearAllIntervals() {
-    for (let i = 1; i < 9999; i++) {
-      window.clearInterval(i);
-    }
-  }
 }

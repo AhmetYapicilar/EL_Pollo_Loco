@@ -97,7 +97,7 @@ class Endboss extends MovableObject {
   }
 
   endbossSeesTheCharacter() {
-    return this.seesTheCharacter() && !this.isHurt();
+    return this.seesTheCharacter()  && !this.isHurt() && !this.isDead();
   }
 
   moveLeftAndRight() {
@@ -119,7 +119,7 @@ class Endboss extends MovableObject {
   }
 
   followTheCharacter() {
-    this.speed = 5;
+    this.speed = 15;
     if (this.checkWhereCharacterIs() < 0) {
       this.otherDirection = false;
       this.moveLeft();

@@ -10,6 +10,12 @@ class Chicken extends MovableObject {
   IMAGES_DEAD = ["./img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
   DEATH_SOUND = new Audio("audio/chicken_death.mp3");
   world;
+  offset = {
+    top: 10,
+    left: 0,
+    right: 0,
+    bottom: 10
+  };
 
   constructor() {
     super().loadImage("./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
@@ -38,7 +44,7 @@ class Chicken extends MovableObject {
   }
 
   chickenIsAliveAndGameHasStarted() {
-    return !this.isDead() && !this.world.screen.startScreen;
+    return !this.isDead() && !this.world.screen.startScreen && !this.world.screen.winScreen && !this.world.screen.winScreen;
   }
 
   chickenIsMovingLeft() {

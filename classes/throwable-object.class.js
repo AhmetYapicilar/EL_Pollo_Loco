@@ -24,6 +24,12 @@ class ThrowableObject extends CollectableObject {
   ];
   THROW_SOUND = new Audio("audio/throwing.mp3");
   SPLASH_SOUND = new Audio("audio/bottleSplash.mp3");
+  offset = {
+    top: 5,
+    left: 25,
+    right: 25,
+    bottom: 20
+  };
 
   constructor(x) {
     super().loadImage(this.IMAGE_BOTTLE_NORMAL);

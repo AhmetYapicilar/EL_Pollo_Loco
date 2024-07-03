@@ -1,6 +1,6 @@
 class World {
   character = new Character();
-  level = LEVEL1;
+  level = new Level();
   screen = new Screen();
   statusbarHealth = new HealthBar();
   statusbarBottle = new BottleBar();
@@ -37,12 +37,17 @@ class World {
     new Coin(),
   ];
   collectedCoins = [];
+  musicMuted = false;
   bgMusic = new Audio("audio/backgroundMusic.mp3");
   game_over = new Audio("audio/gameOver.mp3");
   musicEnded = false;
   gameOverSoundPlayed = false;
+  //playAgain = false;
 
-  constructor(canvas, keyboard) {
+  constructor(canvas, keyboard, playAgain) {
+    /*if(playAgain){
+      this.playAgain = true;
+    }*/
     this.setWorld();
     this.keyboard = keyboard;
     this.canvas = canvas;
@@ -50,13 +55,48 @@ class World {
     this.run();
   }
 
+  clearAllIntervals() {
+    for (let i = 0; i < 999999999999999999999999; i++) {
+      window.clearInterval(i);
+    }
+  }
+
+  resetVariables() {
+    this.character = null;
+    /*this.level.enemies = [];
+    this.level.clouds = [];
+    this.level.backgroundObjects = [];
+    this.level.level_end_x = null;*/
+    this.level = null;
+    this.screen = null;
+    this.statusbarHealth = null;
+    this.statusbarBottle = null;
+    this.statusbarCoin = null;
+    this.statusbarEndboss = null;
+    this.camera_x = null;
+    this.throwableObjects = [
+    ];
+    this.collectedBottles = [];
+    this.throwBottles = [];
+    this.coins = [
+    ];
+    this.collectedCoins = [];
+    this.bgMusic =null;
+    this.game_over = null;
+    this.musicEnded = null;
+    this.gameOverSoundPlayed = null;
+    this.musicMuted = null;
+  }
+
   playBackgroundMusic() {
+    if(!this.musicMuted){
     this.bgMusic.loop = true; // Aktivieren der integrierten Schleifenfunktion
 
     // Spielen der Musik
     this.bgMusic.play().catch((error) => {
       console.error("Fehler beim Abspielen der Hintergrundmusik:", error);
     });
+  }
   }
 
   playGameOver() {
@@ -77,35 +117,10 @@ class World {
   collectBottle() {
     for (let i = 0; i < this.throwableObjects.length; i++) {
       let bottle = this.throwableObjects[i];
-      const {
-        characterCenterX,
-        characterCenterY,
-        objectCenterX,
-        objectCenterY,
-      } = this.initVariables(bottle);
-      if (
-        this.characterIsColidingWithObject(
-          characterCenterX,
-          characterCenterY,
-          objectCenterX,
-          objectCenterY
-        )
-      ) {
+      if (this.character.isColliding(bottle)) {
         this.takeBottle(bottle, i);
       }
     }
-  }
-
-  characterIsColidingWithObject(
-    characterCenterX,
-    characterCenterY,
-    objectCenterX,
-    objectCenterY
-  ) {
-    return (
-      Math.abs(characterCenterY - objectCenterY) <= 40 &&
-      Math.abs(characterCenterX - objectCenterX) <= 20
-    );
   }
 
   takeBottle(bottle, i) {
@@ -119,7 +134,7 @@ class World {
       let bottle = this.throwableObjects[i];
       if (
         bottle.y === 350 &&
-        Math.abs(this.character.x - bottle.x) <= 40 &&
+        Math.abs((this.character.x + 40) - (bottle.x)) <= 20 &&
         this.character.y === 180
       ) {
         this.takeBottle(bottle);
@@ -130,17 +145,8 @@ class World {
   collectCoins() {
     for (let i = 0; i < this.coins.length; i++) {
       let coin = this.coins[i];
-      let { characterCenterX, characterCenterY, objectCenterX, objectCenterY } =
-        this.initVariables(coin);
 
-      if (
-        this.characterIsColidingWithObject(
-          characterCenterX,
-          characterCenterY,
-          objectCenterX,
-          objectCenterY
-        )
-      ) {
+    if (this.character.isColliding(coin)) {
         this.takeCoin(coin, i);
       }
     }
@@ -247,20 +253,14 @@ class World {
     let i = this.level.enemies.length;
     for (let j = 0; j < i; j++) {
       const enemy = this.level.enemies[j];
-      if (this.characterIsColidingWithChicken(enemy, i)) {
+      if (this.characterIsCollidingWithChicken(enemy)) {
         this.characterGetsHurt();
       }
     }
   }
 
-  characterIsColidingWithChicken(enemy, i) {
-    return (
-      this.character.y > 170 &&
-      this.character.isColliding(enemy) &&
-      enemy.energy > 5 &&
-      !this.character.isDead() &&
-      !this.level.enemies[i - 1].isDead()
-    );
+  characterIsCollidingWithChicken(enemy){
+    return this.character.y > 100.5 && this.character.isColliding(enemy) && enemy.energy > 5 && !this.character.isDead();
   }
 
   characterGetsHurt() {
@@ -301,9 +301,20 @@ class World {
   }
 
   draw() {
-    if (this.gameIsOverOrIsNotStarted()) {
+     if (this.gameIsOverOrIsNotStarted()) {
       return;
     }
+    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.ctx.translate(this.camera_x, 0);
+    this.drawObjectsBeforeCameraIsTranslating();
+    this.ctx.translate(-this.camera_x, 0);
+    this.drawObjectsAfterCameraIsTranslating();
+    this.ctx.translate(this.camera_x, 0);
+    this.ctx.translate(-this.camera_x, 0);
+    this.repeatDrawing();
+  }
+
+  drawAgain(){
     this.ctx.clearRect(0, 0, canvas.width, canvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.drawObjectsBeforeCameraIsTranslating();

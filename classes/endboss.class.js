@@ -1,8 +1,30 @@
+/**
+ * Class representing the Endboss in the game.
+ * @extends MovableObject
+ */
 class Endboss extends MovableObject {
+  /**
+   * The height of the Endboss.
+   * @type {number}
+   */
   height = 500;
+
+  /**
+   * The width of the Endboss.
+   * @type {number}
+   */
   width = 300;
+
+  /**
+   * The y-coordinate of the Endboss.
+   * @type {number}
+   */
   y = -35;
 
+  /**
+   * Array of image paths for the Endboss's angry state.
+   * @type {string[]}
+   */
   IMAGES_Angry = [
     "./img/4_enemie_boss_chicken/2_alert/G5.png",
     "./img/4_enemie_boss_chicken/2_alert/G6.png",
@@ -14,6 +36,10 @@ class Endboss extends MovableObject {
     "./img/4_enemie_boss_chicken/2_alert/G12.png",
   ];
 
+  /**
+   * Array of image paths for the Endboss's walking state.
+   * @type {string[]}
+   */
   IMAGES_WALKING = [
     "./img/4_enemie_boss_chicken/1_walk/G1.png",
     "./img/4_enemie_boss_chicken/1_walk/G2.png",
@@ -21,6 +47,10 @@ class Endboss extends MovableObject {
     "./img/4_enemie_boss_chicken/1_walk/G4.png",
   ];
 
+  /**
+   * Array of image paths for the Endboss's attack state.
+   * @type {string[]}
+   */
   IMAGES_ATTACK = [
     "./img/4_enemie_boss_chicken/3_attack/G13.png",
     "./img/4_enemie_boss_chicken/3_attack/G14.png",
@@ -32,20 +62,41 @@ class Endboss extends MovableObject {
     "./img/4_enemie_boss_chicken/3_attack/G20.png",
   ];
 
+  /**
+   * Array of image paths for the Endboss's hurt state.
+   * @type {string[]}
+   */
   IMAGES_HURT = [
     "./img/4_enemie_boss_chicken/4_hurt/G21.png",
     "./img/4_enemie_boss_chicken/4_hurt/G22.png",
     "./img/4_enemie_boss_chicken/4_hurt/G23.png",
   ];
 
+  /**
+   * Array of image paths for the Endboss's dead state.
+   * @type {string[]}
+   */
   IMAGES_DEAD = [
     "./img/4_enemie_boss_chicken/5_dead/G24.png",
     "./img/4_enemie_boss_chicken/5_dead/G25.png",
     "./img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
+
+  /**
+   * Flag indicating whether the Endboss is moving left.
+   * @type {boolean}
+   */
   movingLeft = true;
+
+  /**
+   * Audio object for the win sound.
+   * @type {HTMLAudioElement}
+   */
   winSound = new Audio("audio/winGame.mp3");
 
+  /**
+   * Create an Endboss.
+   */
   constructor() {
     super().loadImage("./img/4_enemie_boss_chicken/2_alert/G5.png");
     this.x = 2500;
@@ -58,15 +109,20 @@ class Endboss extends MovableObject {
     this.animate();
   }
 
+  /**
+   * Set the world object for the Endboss.
+   * @param {Object} world - The world object.
+   */
   setWorld(world) {
     this.world = world;
   }
 
+  /**
+   * Animate the Endboss.
+   */
   animate() {
     this.endbossIsMoving();
-
     this.turnDirectionEveryTwoSeconds();
-
     setInterval(() => {
       this.playAnimations();
       if (this.endbossIsDead()) {
@@ -75,6 +131,9 @@ class Endboss extends MovableObject {
     }, 100);
   }
 
+  /**
+   * Make the Endboss move.
+   */
   endbossIsMoving() {
     setInterval(() => {
       if (this.endbossDoesNotSeeTheCharacter()) {
@@ -86,20 +145,35 @@ class Endboss extends MovableObject {
     }, 1000 / 20);
   }
 
+  /**
+   * Check if the Endboss sees the character.
+   * @returns {boolean}
+   */
   seesTheCharacter() {
     if (this.world) {
       return Math.abs(this.world.character.x - this.x) <= 530;
     }
   }
 
+  /**
+   * Check if the Endboss does not see the character.
+   * @returns {boolean}
+   */
   endbossDoesNotSeeTheCharacter() {
     return !this.seesTheCharacter() && !this.isHurt();
   }
 
+  /**
+   * Check if the Endboss sees the character.
+   * @returns {boolean}
+   */
   endbossSeesTheCharacter() {
-    return this.seesTheCharacter()  && !this.isHurt() && !this.isDead();
+    return this.seesTheCharacter() && !this.isHurt() && !this.isDead();
   }
 
+  /**
+   * Move the Endboss left and right.
+   */
   moveLeftAndRight() {
     if (this.movingLeft) {
       this.moveLeft();
@@ -110,6 +184,9 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Turn the direction of the Endboss every two seconds.
+   */
   turnDirectionEveryTwoSeconds() {
     setInterval(() => {
       if (this.energy === 100) {
@@ -118,6 +195,9 @@ class Endboss extends MovableObject {
     }, 2000);
   }
 
+  /**
+   * Make the Endboss follow the character.
+   */
   followTheCharacter() {
     this.speed = 15;
     if (this.checkWhereCharacterIs() < 0) {
@@ -129,10 +209,17 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Check where the character is relative to the Endboss.
+   * @returns {number}
+   */
   checkWhereCharacterIs() {
     return this.world.character.x - this.x;
   }
 
+  /**
+   * Play the animations for the Endboss.
+   */
   playAnimations() {
     if (!this.seesTheCharacter()) {
       this.playAnimation(this.IMAGES_WALKING);
@@ -147,10 +234,17 @@ class Endboss extends MovableObject {
     }
   }
 
+  /**
+   * Check if the Endboss is dead.
+   * @returns {boolean}
+   */
   endbossIsDead() {
     return this.isDead() && !this.isDeadAnimationPlaying;
   }
 
+  /**
+   * Eliminate the Endboss.
+   */
   endbossGetsEliminated() {
     this.playAnimation(this.IMAGES_DEAD);
     this.world.bgMusic.pause();
@@ -158,6 +252,9 @@ class Endboss extends MovableObject {
     this.dead = true;
   }
 
+  /**
+   * Play the final dead animation for the Endboss.
+   */
   finalDeadAnimation() {
     this.winSound.play();
     setTimeout(() => {
@@ -171,3 +268,4 @@ class Endboss extends MovableObject {
     }
   }
 }
+

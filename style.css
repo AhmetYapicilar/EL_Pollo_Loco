@@ -9,8 +9,8 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    min-width: 100vw;
+    height: 100vh;
+    width: 100vw;
     background-image: url('./img/desert.png');
     background-position: center;
     background-size: cover;
@@ -27,9 +27,9 @@ body{
 }
 
 .content{
-    display: flex;
+    /*display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;*/
     position: relative;
 }
 
@@ -173,7 +173,7 @@ h2{
 }
 
 p{
-    font-size: 40px;
+    font-size: 32px;
 }
 
 .mobileButtons{
@@ -181,21 +181,21 @@ p{
     bottom: 0px;
 }
 
+#btnLeft{
+    margin-right: 24px;
+}
+
+#btnJump{
+    margin-right: 24px;
+}
+
 @media only screen and (max-width: 720px){
     #body{
         width: 100vw;
-        height: 100vh;
         overflow-x: hidden !important;
         margin: 0;
     }
-    canvas, .content, .screen{
-        width: 100%;
-    }
-
-    .screen{
-        height: 100%;
-    }
-
+   
     #title{
         display: none !important;
     }
@@ -211,13 +211,6 @@ p{
     #body{
         height: 100vh;
         overflow-y: hidden !important;
-    }
-    canvas, .content, .screen{
-        height: 90%;
-    }
-
-    .screen{
-        height: 100vh;
     }
 
     #title{
@@ -238,5 +231,16 @@ p{
         width: 80px;
         height: 60px;
         font-size: 16px;
+    }
+}
+
+@media(max-width: 715px){
+    .icons{
+        right: 45px;
+    }
+
+    .icons img{
+        width: 24px;
+        height: 24px;
     }
 }

@@ -94,8 +94,8 @@ canvas{
 .screen-bottom{
     position: absolute;
     bottom: 0px;
-    left: 0;
     right: 10px;
+    width: 50px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -178,6 +178,7 @@ p{
 .mobileButtons{
     position: absolute;
     bottom: 0px;
+    width: 88%;
 }
 
 #btnLeft{

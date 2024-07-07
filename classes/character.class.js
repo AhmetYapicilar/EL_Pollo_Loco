@@ -151,7 +151,7 @@ class Character extends MovableObject {
     top: 70,
     left: 70,
     right: 60,
-    bottom: 30
+    bottom: 30,
   };
 
   /**
@@ -270,6 +270,7 @@ class Character extends MovableObject {
       clearInterval(this.fallInterval);
       this.isDeadAnimationPlaying = true;
       this.dead = true;
+      this.world.screen.gameOverScreen = true;
     }
   }
 

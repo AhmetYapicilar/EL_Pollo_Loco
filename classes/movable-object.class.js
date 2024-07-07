@@ -101,14 +101,14 @@ class MovableObject extends DrawableObject {
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
   };
 
   /**
    * Sets the game world for the object.
    * @param {World} world - The game world object.
    */
-  setWorld(world){
+  setWorld(world) {
     this.world = world;
   }
 
@@ -218,4 +218,3 @@ class MovableObject extends DrawableObject {
     );
   }
 }
-

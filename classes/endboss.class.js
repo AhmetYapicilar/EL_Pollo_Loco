@@ -265,7 +265,7 @@ class Endboss extends MovableObject {
     if (this.y > this.world.canvas.height) {
       clearInterval(this.fallInterval);
       this.isDeadAnimationPlaying = true;
+      this.world.screen.winScreen = true;
     }
   }
 }
-

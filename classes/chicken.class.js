@@ -57,7 +57,7 @@ class Chicken extends MovableObject {
     top: 10,
     left: 0,
     right: 0,
-    bottom: 10
+    bottom: 10,
   };
 
   /**
@@ -107,7 +107,11 @@ class Chicken extends MovableObject {
    * @returns {boolean}
    */
   chickenIsAliveAndGameHasStarted() {
-    return !this.isDead() && !this.world.screen.startScreen && !this.world.screen.winScreen;
+    return (
+      !this.isDead() &&
+      !this.world.screen.startScreen &&
+      !this.world.screen.winScreen
+    );
   }
 
   /**

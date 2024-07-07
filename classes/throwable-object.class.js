@@ -101,7 +101,7 @@ class ThrowableObject extends CollectableObject {
     top: 5,
     left: 25,
     right: 25,
-    bottom: 20
+    bottom: 20,
   };
 
   /**
@@ -138,7 +138,7 @@ class ThrowableObject extends CollectableObject {
    * @param {number} y - Y-coordinate to throw the object to.
    */
   throw(x, y) {
-    if(this.world.muteBottleSounds){
+    if (this.world.muteBottleSounds) {
       this.SPLASH_SOUND.muted = true;
       this.THROW_SOUND.muted = true;
     }

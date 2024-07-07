@@ -63,7 +63,7 @@ class SmallChicken extends MovableObject {
     top: 10,
     left: 20,
     right: 20,
-    bottom: 10
+    bottom: 10,
   };
 
   /**
@@ -107,7 +107,11 @@ class SmallChicken extends MovableObject {
    * @returns {boolean}
    */
   chickenIsAliveAndGameHasStarted() {
-    return !this.isDead() && !this.world.screen.startScreen && !this.world.screen.winScreen;
+    return (
+      !this.isDead() &&
+      !this.world.screen.startScreen &&
+      !this.world.screen.winScreen
+    );
   }
 
   /**

@@ -55,8 +55,8 @@ class DrawableObject {
    * @param {string} path - The path to the image file.
    */
   loadImage(path) {
-      this.img = new Image();
-      this.img.src = path;
+    this.img = new Image();
+    this.img.src = path;
   }
 
   /**
@@ -64,7 +64,7 @@ class DrawableObject {
    * @param {CanvasRenderingContext2D} ctx - The canvas rendering context to draw on.
    */
   draw(ctx) {
-      ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
   }
 
   /**
@@ -72,17 +72,17 @@ class DrawableObject {
    * @param {string[]} array - An array of paths to the image files.
    */
   loadImages(array) {
-      array.forEach((path) => {
-          let img = new Image();
-          img.src = path;
-          this.imageCache[path] = img;
-      });
+    array.forEach((path) => {
+      let img = new Image();
+      img.src = path;
+      this.imageCache[path] = img;
+    });
   }
 
   /**
- * Clears all active intervals by iterating through a large range of possible interval IDs.
- */
-clearAllIntervals() {
+   * Clears all active intervals by iterating through a large range of possible interval IDs.
+   */
+  clearAllIntervals() {
     for (let i = 0; i < 9999; i++) {
       window.clearInterval(i);
     }

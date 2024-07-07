@@ -88,33 +88,14 @@ class Screen extends DrawableObject {
    */
   setWorld(world) {
     this.world = world;
-    this.animate();
   }
 
   /**
    * Triggers the game over event.
    */
   triggerGameOverEvent() {
-    const event = new CustomEvent('gameOver', { detail: this });
+    const event = new CustomEvent("gameOver", { detail: this });
     window.dispatchEvent(event);
-  }
-
-  /**
-   * Animates the screen.
-   */
-  animate() {
-    setInterval(() => {
-      this.i = this.world.level.enemies.length - 1;
-      if (this.gameHasNotStarted()) {
-        this.showIntroScreen();
-      } else if (this.endbossIsDead()) {
-        this.showWinScreen();
-        this.triggerGameOverEvent();
-      } else if (this.characterIsDead()) {
-        this.showGameOverScreen();
-        this.triggerGameOverEvent();
-      }
-    }, 1000 / 60);
   }
 
   /**
@@ -145,68 +126,6 @@ class Screen extends DrawableObject {
   }
 
   /**
-   * Displays the intro screen.
-   */
-  showIntroScreen() {
-    this.loadImage(this.IMAGE_INTRO);
-    this.world.ctx.clearRect(
-      0,
-      0,
-      this.world.canvas.width,
-      this.world.canvas.height
-    );
-    this.world.ctx.drawImage(
-      this.img,
-      0,
-      0,
-      this.world.canvas.width,
-      this.world.canvas.height
-    );
-  }
-
-  /**
-   * Displays the win screen.
-   */
-  showWinScreen() {
-    this.loadImage(this.IMAGE_WIN);
-    /*this.world.ctx.clearRect(
-      0,
-      0,
-      this.world.canvas.width,
-      this.world.canvas.height
-    );*/
-    this.world.ctx.drawImage(
-      this.img,
-      0,
-      0,
-      this.world.canvas.width,
-      this.world.canvas.height
-    );
-    this.winScreen = true;
-  }
-
-  /**
-   * Displays the game over screen.
-   */
-  showGameOverScreen() {
-    this.loadImage(this.IMAGE_GAMEOVER);
-    /*this.world.ctx.clearRect(
-      0,
-      0,
-      this.world.canvas.width,
-      this.world.canvas.height
-    );*/
-    this.world.ctx.drawImage(
-      this.img,
-      0,
-      0,
-      this.world.canvas.width,
-      this.world.canvas.height
-    );
-    this.gameOverScreen = true;
-  }
-
-  /**
    * Reloads the current page after a delay.
    */
   reloadPage() {
@@ -215,4 +134,3 @@ class Screen extends DrawableObject {
     }, 2000);
   }
 }
-

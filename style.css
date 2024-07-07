@@ -93,10 +93,9 @@ canvas{
 
 .screen-bottom{
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
     left: 0;
     right: 10px;
-    height: 100px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -200,10 +199,8 @@ p{
         display: none !important;
     }
 
-    .impressum{
-        position: absolute;
-        bottom: 0;
-        right: 10px;
+    canvas{
+        width: 90vw;
     }
 }
 
@@ -213,12 +210,20 @@ p{
         overflow-y: hidden !important;
     }
 
+   /* .content{
+        height: 100vh;
+    }*/
+
+    canvas{
+        height: 90vh;
+    }
+
     #title{
         display: none !important;
     }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 780px) {
     .startButton {
         width: 80px;
         height: 60px;
@@ -226,7 +231,7 @@ p{
     }
 }
 
-@media only screen and (max-height: 320px) {
+@media only screen and (max-height: 450px) {
     .startButton {
         width: 80px;
         height: 60px;
@@ -234,7 +239,7 @@ p{
     }
 }
 
-@media(max-width: 715px){
+/*@media(max-width: 715px){
     .icons{
         right: 45px;
     }
@@ -243,4 +248,4 @@ p{
         width: 24px;
         height: 24px;
     }
-}
+}*/

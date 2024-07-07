@@ -199,7 +199,7 @@ class Endboss extends MovableObject {
    * Make the Endboss follow the character.
    */
   followTheCharacter() {
-    this.speed = 15;
+    this.speed = 10;
     if (this.checkWhereCharacterIs() < 0) {
       this.otherDirection = false;
       this.moveLeft();

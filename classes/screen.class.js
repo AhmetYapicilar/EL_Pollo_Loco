@@ -169,12 +169,12 @@ class Screen extends DrawableObject {
    */
   showWinScreen() {
     this.loadImage(this.IMAGE_WIN);
-    this.world.ctx.clearRect(
+    /*this.world.ctx.clearRect(
       0,
       0,
       this.world.canvas.width,
       this.world.canvas.height
-    );
+    );*/
     this.world.ctx.drawImage(
       this.img,
       0,
@@ -183,7 +183,6 @@ class Screen extends DrawableObject {
       this.world.canvas.height
     );
     this.winScreen = true;
-    // this.reloadPage(); // Uncomment to enable page reload on win screen
   }
 
   /**
@@ -191,12 +190,12 @@ class Screen extends DrawableObject {
    */
   showGameOverScreen() {
     this.loadImage(this.IMAGE_GAMEOVER);
-    this.world.ctx.clearRect(
+    /*this.world.ctx.clearRect(
       0,
       0,
       this.world.canvas.width,
       this.world.canvas.height
-    );
+    );*/
     this.world.ctx.drawImage(
       this.img,
       0,
@@ -205,7 +204,6 @@ class Screen extends DrawableObject {
       this.world.canvas.height
     );
     this.gameOverScreen = true;
-    // this.reloadPage(); // Uncomment to enable page reload on game over screen
   }
 
   /**
@@ -214,7 +212,6 @@ class Screen extends DrawableObject {
   reloadPage() {
     setTimeout(() => {
       this.clearAllIntervals();
-      // window.location.reload(); // Uncomment to reload the page
     }, 2000);
   }
 }

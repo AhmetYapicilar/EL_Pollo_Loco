@@ -78,4 +78,13 @@ class DrawableObject {
           this.imageCache[path] = img;
       });
   }
+
+  /**
+ * Clears all active intervals by iterating through a large range of possible interval IDs.
+ */
+clearAllIntervals() {
+    for (let i = 0; i < 9999; i++) {
+      window.clearInterval(i);
+    }
+  }
 }

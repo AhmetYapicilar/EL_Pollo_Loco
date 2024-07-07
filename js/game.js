@@ -4,17 +4,20 @@ let world;
 let keyboard = new Keyboard();
 let soundMuted;
 let playAgain = false;
+let fullsize = false;
 
 /**
  * Initializes the game by setting up the canvas, world, and event listeners.
  */
 function init() {
   canvas = document.getElementById("canvas");
+  generateCSSForNormalscreen();
   world = new World(canvas, keyboard);
   soundMuted = getLocalStorage("soundMuted") || false;
   loadAudioWhenInit();
   mobileButtons();
   handleResize(); // Check the initial state
+  intervalForSizeOfScreens();
   window.addEventListener("resize", handleResize);
   window.addEventListener("gameOver", handleGameOver);
 }
@@ -30,6 +33,7 @@ function resetEverything() {
   ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   world = new World(canvas, keyboard);
+  intervalForSizeOfScreens();
 }
 
 /**
@@ -43,7 +47,7 @@ function startGame() {
   } else {
     firstStartGame();
   }
-  if (window.innerWidth < 800 && !(window.innerHeight > window.innerWidth)) {
+  if (isMobile()) {
     document.getElementById("mobileButtons").style.display = "flex";
   }
   world.playBackgroundMusic();
@@ -90,8 +94,12 @@ function restartGame() {
  */
 function loadAudioWhenInit() {
   if (soundMuted) {
+    document.getElementById("mute-audio-icon").classList.remove("d-none");
+    document.getElementById("audio-icon").classList.add("d-none");
     world.musicMuted = true;
   } else {
+    document.getElementById("mute-audio-icon").classList.add("d-none");
+    document.getElementById("audio-icon").classList.remove("d-none");
     world.musicMuted = false;
   }
 }
@@ -184,83 +192,76 @@ function toggleFullscreen(fullscreenElement) {
  * Generates the appropriate CSS for fullscreen mode based on the screen dimensions.
  */
 function generateCSSForFullscreen() {
-  if (innerWidth > 720 && innerHeight > 480) {
+  fullsize = true;
+  if (!isMobile()) {
     fullscreenForLaptop();
   } else {
     fullscreenForMobile();
   }
+  adjustDimensions();
 }
 
 /**
  * Generates the appropriate CSS for normal screen mode based on the screen dimensions.
  */
 function generateCSSForNormalscreen() {
-  if (innerWidth > 720 && innerHeight > 480) {
+  fullsize = false;
+  if (!isMobile()) {
     normalScreenForLaptop();
-  } else {
+  } else if(isMobile()) {
     normalScreenForMobile();
-  }
+  } 
+  adjustDimensions();
 }
 
 /**
  * Sets the CSS for normal screen mode on mobile devices, adjusting various elements' styles.
  */
 function normalScreenForMobile() {
-  givingElements100percent();
-  document.querySelector(".impressum").style.position = "absolute";
-  document.querySelector(".impressum").style.bottom = "0";
-  document.querySelector(".impressum").style.right = "10px";
-  document.getElementById("mobileButtons").style.position = "absolute";
-  document.getElementById("mobileButtons").style.bottom = "56px";
-  document.getElementById("screen-bottom").style.bottom = "30px";
-}
-
-/**
- * Sets the width and height of various elements to 100% to ensure they occupy the full viewport.
- */
-function givingElements100percent() {
-  document.getElementById("body").style.width = "100vw";
-  document.getElementById("body").style.height = "100vh";
-  document.getElementById("showInFullscreen").style.width = "100%";
-  document.getElementById("showInFullscreen").style.height = "100%";
-  document.getElementById("canvas").style.width = "100%";
-  document.getElementById("canvas").style.height = "90%";
-  document.getElementById("screen").style.width = "100%";
-  document.getElementById("screen").style.height = "90%";
-  document.getElementById("settings-screen").style.width = "100%";
-  document.getElementById("settings-screen").style.height = "100%";
+  if(innerWidth > 720){
+    document.getElementById("canvas").style.width = "720px";
+  } else{
+    document.getElementById("canvas").style.width = "90vw";
+  }
+    if(innerHeight > 480){
+    document.getElementById("canvas").style.height = "480px";
+    } else {
+      document.getElementById("canvas").style.height = "90vh";
+    }
 }
 
 /**
  * Sets the CSS for normal screen mode on laptops, adjusting various elements' styles.
  */
 function normalScreenForLaptop() {
-  document.getElementById("showInFullscreen").style.position = "relative";
-  document.getElementById("showInFullscreen").style.display = "flex";
-  document.getElementById("canvas").style.width = "720px";
-  document.getElementById("canvas").style.height = "480px";
-  document.getElementById("screen").style.width = "720px";
-  document.getElementById("screen").style.height = "480px";
-  document.getElementById("settings-screen").style.width = "720px";
-  document.getElementById("settings-screen").style.height = "480px";
-  document.getElementById("screen-bottom").style.right = "10px";
+  if(innerWidth > 720){
+    document.getElementById("canvas").style.width = "720px";
+  } else{
+    document.getElementById("canvas").style.width = "90vw";
+  } if(innerHeight > 480){
+    document.getElementById("canvas").style.height = "480px";
+    } else {
+      document.getElementById("canvas").style.height = "90vh";
+    }
+}
+
+/**
+ * Interval which checks every 200ms the size of the screen and optimize the size of the canvas.
+ */
+function intervalForSizeOfScreens(){
+  setInterval(() => {
+    if(!fullsize){
+      generateCSSForNormalscreen();
+    }
+  }, 200);
 }
 
 /**
  * Sets the CSS for fullscreen mode on laptops, adjusting various elements' styles to fill the screen.
  */
 function fullscreenForLaptop() {
-  document.getElementById("showInFullscreen").style.position = "absolute";
-  document.getElementById("showInFullscreen").style.top = "0";
-  document.getElementById("showInFullscreen").style.left = "0";
-  document.getElementById("showInFullscreen").style.right = "0";
-  document.getElementById("showInFullscreen").style.bottom = "0";
-  document.getElementById("canvas").style.width = "100vw";
-  document.getElementById("canvas").style.height = "100vh";
-  document.getElementById("screen").style.width = "100vw";
-  document.getElementById("screen").style.height = "100vh";
-  document.getElementById("settings-screen").style.width = "100vw";
-  document.getElementById("settings-screen").style.height = "100vh";
+  document.getElementById("canvas").style.width = "100%";
+  document.getElementById("canvas").style.height = "100%";
   document.getElementById("screen-bottom").style.right = "0px";
 }
 
@@ -268,14 +269,8 @@ function fullscreenForLaptop() {
  * Sets the CSS for fullscreen mode on mobile devices, adjusting various elements' styles to fill the screen.
  */
 function fullscreenForMobile() {
-  document.getElementById("showInFullscreen").style.width = "100%";
-  document.getElementById("showInFullscreen").style.height = "100%";
   document.getElementById("canvas").style.width = "100vw";
   document.getElementById("canvas").style.height = "100vh";
-  document.getElementById("screen").style.width = "100vw";
-  document.getElementById("screen").style.height = "100vh";
-  document.getElementById("settings-screen").style.width = "100vw";
-  document.getElementById("settings-screen").style.height = "100vh";
   document.getElementById("screen-bottom").style.right = "0px";
   document.getElementById("mobileButtons").style.position = "absolute";
   document.getElementById("mobileButtons").style.bottom = "0";
@@ -357,17 +352,16 @@ function closeSettings() {
  * Handles window resize events, adjusting the display of certain elements based on screen dimensions.
  */
 function handleResize() {
-  if (window.innerWidth < 800 && window.innerHeight > window.innerWidth) {
+  if (isMobile() && window.innerHeight > window.innerWidth) {
     justShowTurnDevice();
   } else {
     justHideTurnDevice();
   }
-  if (window.innerWidth > 800) {
+  if (!isMobile()) {
     document.getElementById("mobileButtons").style.display = "none";
   } else if (
     world.screen.startScreen &&
-    window.innerWidth < 800 &&
-    !(window.innerHeight > window.innerWidth)
+    isMobile()
   ) {
     document.getElementById("mobileButtons").style.display = "none";
   }

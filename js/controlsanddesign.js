@@ -159,6 +159,34 @@ function mobileButtons() {
       keyboard.D = false;
     }
   }
+
+  /**
+ * Checks whether device is Mobile.
+ */
+  function isMobile() {
+    const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+    return regex.test(navigator.userAgent);
+  }
+
+  /**
+   * The screens gets the same height and width as the canvas.
+   */
+  function adjustDimensions() {
+    const canvas = document.querySelector('canvas');
+    const screens = document.querySelectorAll('.screen, .settings-screen');
+    
+    if (canvas) {
+        const canvasHeight = canvas.offsetHeight;
+        const canvasWidth = canvas.offsetWidth;
+        
+        screens.forEach(screen => {
+            screen.style.height = `${canvasHeight}px`;
+            screen.style.width = `${canvasWidth}px`;
+        });
+    }
   
+    requestAnimationFrame(adjustDimensions);
+  }
+    
   window.addEventListener("keydown", handleKeyDown);
   window.addEventListener("keyup", handleKeyUp);

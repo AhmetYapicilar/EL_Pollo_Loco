@@ -41,11 +41,12 @@ class World {
     new Coin(),
   ];
   collectedCoins = [];
-  musicMuted = false;
   bgMusic = new Audio("audio/backgroundMusic.mp3");
   game_over = new Audio("audio/gameOver.mp3");
   musicEnded = false;
   gameOverSoundPlayed = false;
+  muteBottleSounds = false;
+  
   /**
    * Creates an instance of World.
    * @param {HTMLCanvasElement} canvas - The canvas element for rendering.
@@ -80,19 +81,16 @@ class World {
     this.game_over = null;
     this.musicEnded = null;
     this.gameOverSoundPlayed = null;
-    this.musicMuted = null;
   }
 
   /**
    * Plays the background music if not muted.
    */
   playBackgroundMusic() {
-    if (!this.musicMuted) {
       this.bgMusic.loop = true;
       this.bgMusic.play().catch((error) => {
         console.error("Error playing background music:", error);
       });
-    }
   }
 
   /**

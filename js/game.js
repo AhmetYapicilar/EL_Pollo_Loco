@@ -47,7 +47,7 @@ function startGame() {
   } else {
     firstStartGame();
   }
-  if (isMobile()) {
+  if (isMobile() || isTablet()) {
     document.getElementById("mobileButtons").style.display = "flex";
   }
   world.playBackgroundMusic();
@@ -61,7 +61,6 @@ function hideElementsInGame() {
   document.getElementById("startButton").style.display = "none";
   document.getElementById("title").style.display = "none";
   document.getElementById("screen").style.display = "none";
-  document.getElementById("screen-bottom").style.display = "none";
 }
 
 /**
@@ -96,13 +95,16 @@ function loadAudioWhenInit() {
   if (soundMuted) {
     document.getElementById("mute-audio-icon").classList.remove("d-none");
     document.getElementById("audio-icon").classList.add("d-none");
-    world.musicMuted = true;
+    world.bgMusic.muted = true;
+    muteAudios(true);
   } else {
     document.getElementById("mute-audio-icon").classList.add("d-none");
     document.getElementById("audio-icon").classList.remove("d-none");
-    world.musicMuted = false;
+    world.bgMusic.muted = false;
+    muteAudios(false);
   }
 }
+
 
 /**
  * Toggles the audio state between muted and unmuted, updates the audio icon visibility,
@@ -115,10 +117,50 @@ function toggleAudio() {
     !document.getElementById("mute-audio-icon").classList.contains("d-none")
   ) {
     world.bgMusic.muted = true;
+    muteAudios(true);
   } else {
     world.bgMusic.muted = false;
+    muteAudios(false);
   }
   saveToLocalStorage("soundMuted", world.bgMusic.muted);
+}
+
+/**
+ * Mute all Audios if x is true.
+ * @param {variable is true or false} x 
+ */
+function muteAudios(x){
+    world.game_over.muted = x;
+  world.character.walking_sound.muted = x;
+  world.character.jumping_sound.muted = x;
+  world.character.hurt_sound.muted = x;
+  getChickens(x);
+  getCoins(x);
+  world.muteBottleSounds = x;
+    world.game_over.muted = x;
+}
+
+/**
+ * Gets all Chickens and mute or unmute their sounds.
+ * @param {variable is true or false} x 
+ */
+function getChickens(x){
+  for (let i = 0; i < world.level.enemies.length - 1; i++) {
+    const enemy = world.level.enemies[i];
+    enemy.DEATH_SOUND.muted = x;
+  };
+  let j = world.level.enemies.length - 1;
+  world.level.enemies[j].winSound.muted = x;
+}
+
+/**
+ * Gets all Coins and mute or unmute their sounds.
+ * @param {variable is true or false} x 
+ */
+function getCoins(x){
+  world.coins.forEach(coin => {
+    coin.COIN_SOUND.muted = x;
+  });
 }
 
 /**
@@ -206,9 +248,9 @@ function generateCSSForFullscreen() {
  */
 function generateCSSForNormalscreen() {
   fullsize = false;
-  if (!isMobile()) {
+  if (!isMobile() && !isTablet()) {
     normalScreenForLaptop();
-  } else if(isMobile()) {
+  } else if(isMobile() || isTablet()) {
     normalScreenForMobile();
   } 
   adjustDimensions();

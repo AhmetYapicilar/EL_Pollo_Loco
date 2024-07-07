@@ -168,6 +168,16 @@ function mobileButtons() {
     return regex.test(navigator.userAgent);
   }
 
+/**
+ * Checks whether the device is a Tablet.
+ */
+function isTablet() {
+  const regex = /iPad|Android/i;
+  const isIPad = navigator.userAgent.includes("iPad") || 
+                 (navigator.userAgent.includes("Macintosh") && 'ontouchend' in document);
+  return regex.test(navigator.userAgent) || isIPad;
+}
+
   /**
    * The screens gets the same height and width as the canvas.
    */

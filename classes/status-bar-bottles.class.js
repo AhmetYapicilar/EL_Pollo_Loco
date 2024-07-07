@@ -67,13 +67,13 @@ class BottleBar extends Statusbar {
      * @returns {number} Index of the image in `IMAGES_STATUSBAR`.
      */
     resolveImageIndex() {
-      if (this.percentage > 80) {
+      if (this.percentage > 40) {
         return 5;
-      } else if (this.percentage > 60) {
+      } else if (this.percentage > 30) {
         return 4;
-      } else if (this.percentage > 40) {
-        return 3;
       } else if (this.percentage > 20) {
+        return 3;
+      } else if (this.percentage > 10) {
         return 2;
       } else if (this.percentage > 0) {
         return 1;

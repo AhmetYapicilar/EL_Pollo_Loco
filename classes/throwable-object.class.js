@@ -138,6 +138,10 @@ class ThrowableObject extends CollectableObject {
    * @param {number} y - Y-coordinate to throw the object to.
    */
   throw(x, y) {
+    if(this.world.muteBottleSounds){
+      this.SPLASH_SOUND.muted = true;
+      this.THROW_SOUND.muted = true;
+    }
     let i = this.world.level.enemies.length;
     if (this.bottleIsNotSplashedAndGameIsWorking(i)) {
       this.sound2Played = true;

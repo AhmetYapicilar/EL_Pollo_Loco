@@ -94,6 +94,8 @@ class Endboss extends MovableObject {
    */
   winSound = new Audio("audio/winGame.mp3");
 
+  turndirectionInterval;
+
   /**
    * Create an Endboss.
    */
@@ -123,19 +125,22 @@ class Endboss extends MovableObject {
   animate() {
     this.endbossIsMoving();
     this.turnDirectionEveryTwoSeconds();
-    setInterval(() => {
+    this.intervals.push(this.movingLeftInterval);
+    this.intervals.push(this.turndirectionInterval);
+    this.animationInterval = setInterval(() => {
       this.playAnimations();
       if (this.endbossIsDead()) {
         this.endbossGetsEliminated();
       }
     }, 100);
+    this.intervals.push(this.animationInterval);
   }
 
   /**
    * Make the Endboss move.
    */
   endbossIsMoving() {
-    setInterval(() => {
+    this.movingLeftInterval = setInterval(() => {
       if (this.endbossDoesNotSeeTheCharacter()) {
         this.moveLeftAndRight();
       }
@@ -188,7 +193,7 @@ class Endboss extends MovableObject {
    * Turn the direction of the Endboss every two seconds.
    */
   turnDirectionEveryTwoSeconds() {
-    setInterval(() => {
+    this.turndirectionInterval = setInterval(() => {
       if (this.energy === 100) {
         this.movingLeft = !this.movingLeft;
       }

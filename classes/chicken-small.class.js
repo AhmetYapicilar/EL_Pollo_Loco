@@ -173,5 +173,5 @@ class SmallChicken extends MovableObject {
     } else {
       console.log("Chicken nicht verfügbar");
     }
-  }
+  }  
 }

@@ -4,8 +4,8 @@ let world;
 let keyboard = new Keyboard();
 let soundMuted;
 let playAgain = false;
-let fullsize = false;
 let settings = false;
+let turndevice = false;
 
 /**
  * Initializes the game by setting up the canvas, world, and event listeners.
@@ -15,10 +15,10 @@ function init() {
   canvas = document.getElementById("canvas");
   generateCSSForNormalscreen();
   world = new World(canvas, keyboard);
+  handleResize(); // Check the initial state
   soundMuted = getLocalStorage("soundMuted") || false;
   loadAudioWhenInit();
   mobileButtons();
-  handleResize(); // Check the initial state
   intervalForSizeOfScreens();
   window.addEventListener("resize", handleResize);
 }
@@ -74,7 +74,7 @@ function firstStartGame() {
   world.screen.startScreen = false;
   world.draw();
   mobileButtons();
-  handleResize(); // Check the initial state
+  //handleResize(); // Check the initial state
   window.addEventListener("resize", handleResize);
 }
 
@@ -169,13 +169,14 @@ function getCoins(x) {
  */
 function setBackground() {
   setInterval(() => {
-    if (world.screen.startScreen && !settings) {
+    if (world.screen.startScreen && !settings && !turndevice) {
+      document.getElementById("screen").style.display = "flex";
       showIntro();
-    } else if (world.screen.winScreen && !settings) {
+    } else if (world.screen.winScreen && !settings && !turndevice) {
       document.getElementById("screen").style.display = "flex";
       showWinScreen();
       handleGameOver();
-    } else if (world.screen.gameOverScreen && !settings) {
+    } else if (world.screen.gameOverScreen && !settings && !turndevice) {
       document.getElementById("screen").style.display = "flex";
       showGameoverScreen();
       handleGameOver();
@@ -320,3 +321,47 @@ function saveToLocalStorage(key, value) {
 function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
+
+/**
+ * Shows the "turn device" screen and hides other elements, indicating that the device should be rotated.
+ */
+function justShowTurnDevice() {
+  if(gameHasStartedAndIsNotOver()){
+      world.pauseGame();
+    }
+  turndevice = true;
+  document.getElementById("turnDeviceScreen").style.display = "flex";
+  document.getElementById("canvas").style.display = "none";
+  document.getElementById("mobileButtons").style.display = "none";
+  document.getElementById("startButton").style.display = "none";
+  document.getElementById("title").style.display = "none";
+  document.getElementById("screen").style.display = "none";
+  document.getElementById("settings-screen").style.display = "none";
+  document.getElementById("screen-bottom").style.display = "none";
+}
+
+/**
+ * Hides the "turn device" screen and shows other game elements, indicating that the device is in the correct orientation.
+ */
+function justHideTurnDevice() {
+ if(gameHasStartedAndIsNotOver()){
+    world.continueGame();
+  }
+  turndevice = false;
+  document.getElementById("turnDeviceScreen").style.display = "none";
+  document.getElementById("canvas").style.display = "block";
+  document.getElementById("mobileButtons").style.display = "flex";
+  document.getElementById("startButton").style.display = "block";
+  document.getElementById("title").style.display = "block";
+  document.getElementById("screen-bottom").style.display = "flex";
+}
+
+/**
+ * Checks whether game has started or is over.
+ */
+function gameHasStartedAndIsNotOver(){
+  return (!world.screen.startScreen &&
+  !world.screen.winScreen &&
+  !world.screen.gameOverScreen);
+}
+

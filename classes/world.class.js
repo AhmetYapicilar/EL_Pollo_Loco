@@ -45,6 +45,7 @@ class World {
   musicEnded = false;
   gameOverSoundPlayed = false;
   muteBottleSounds = false;
+  runInterval;
 
   /**
    * Creates an instance of World.
@@ -80,6 +81,32 @@ class World {
     this.game_over = null;
     this.musicEnded = null;
     this.gameOverSoundPlayed = null;
+    this.runInterval = null;
+  }
+
+  /**
+   * Game is pausing.
+   */
+  pauseGame(){
+    this.bgMusic.pause();
+    this.level.enemies.forEach((enemy) => enemy.pause());
+    this.level.clouds.forEach((cloud) => cloud.pause());
+    if (this.runInterval) {
+      clearInterval(this.runInterval);
+      this.runInterval = null; // Set to null to indicate it's paused
+    }
+  }
+
+  /**
+   * Game is resumed after pausing.
+   */
+  continueGame(){
+    this.bgMusic.play();
+    this.level.enemies.forEach((enemy) => enemy.resume());
+    this.level.clouds.forEach((cloud) => cloud.resume());
+    if (!this.runInterval) {
+      this.run(); // Restart the run interval
+    }
   }
 
   /**
@@ -182,7 +209,7 @@ class World {
    * Starts the main game loops for checking collisions and updating game state.
    */
   run() {
-    setInterval(() => {
+   this.runInterval = setInterval(() => {
       this.checkCollision();
       this.checkThrowObjects();
       this.endbossGetsBottle();

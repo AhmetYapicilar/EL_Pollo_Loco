@@ -217,18 +217,4 @@ class MovableObject extends DrawableObject {
       this.y + this.offset.top <= obj.y + obj.height - obj.offset.bottom
     );
   }
-
-  /**
-   * Stops the intervals and pause the animate function.
-   */
-  pause() {
-    this.intervals.forEach(clearInterval);
-  }
-
-  /**
-   * Starts the animate function.
-   */
-  resume() {
-    this.animate();
-  }
 }

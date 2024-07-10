@@ -1,3 +1,5 @@
+let fullsize = false;
+
 /**
  * Opens the settings screen by hiding other screens and displaying the settings screen.
  */
@@ -30,43 +32,30 @@ function closeSettings() {
 function handleResize() {
   if (isMobile() && window.innerHeight > window.innerWidth) {
     justShowTurnDevice();
+  } else if (isTablet() && window.innerHeight > window.innerWidth){
+    justShowTurnDevice();
   } else {
     justHideTurnDevice();
   }
-  if (!isMobile()) {
+  if (!isMobile() || !isTablet()) {
     document.getElementById("mobileButtons").style.display = "none";
-  } else if (world.screen.startScreen && isMobile()) {
+  } else if (world.screen.startScreen && isMobile() || world.screen.startScreen && isTablet()) {
     document.getElementById("mobileButtons").style.display = "none";
   }
 }
 
 /**
- * Shows the "turn device" screen and hides other elements, indicating that the device should be rotated.
+ * Event Listener to check whether device is in portrait modus or not.
  */
-function justShowTurnDevice() {
-  document.getElementById("turnDeviceScreen").style.display = "flex";
-  document.getElementById("canvas").style.display = "none";
-  document.getElementById("mobileButtons").style.display = "none";
-  document.getElementById("startButton").style.display = "none";
-  document.getElementById("title").style.display = "none";
-  document.getElementById("screen").style.display = "none";
-  document.getElementById("settings-screen").style.display = "none";
-  document.getElementById("screen-bottom").style.display = "none";
-}
+window.matchMedia("(orientation: portrait)").addEventListener("change", e => {
+  const portrait = e.matches;
 
-/**
- * Hides the "turn device" screen and shows other game elements, indicating that the device is in the correct orientation.
- */
-function justHideTurnDevice() {
-  document.getElementById("turnDeviceScreen").style.display = "none";
-  document.getElementById("canvas").style.display = "block";
-  document.getElementById("mobileButtons").style.display = "flex";
-  document.getElementById("startButton").style.display = "block";
-  document.getElementById("title").style.display = "block";
-  document.getElementById("screen").style.display = "flex";
-  document.getElementById("screen-bottom").style.display = "flex";
-}
-
+  if (portrait && world.screen.startScreen) {
+    document.getElementById("mobileButtons").style.display = "none";
+  } else if (!portrait && !world.screen.startScreen) {
+    document.getElementById("mobileButtons").style.display = "flex";
+  }
+});
 /**
  * Toggles the fullscreen mode by invoking the toggleFullscreen function with the appropriate element.
  */
